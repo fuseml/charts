@@ -1,0 +1,12 @@
+Please wait for several minutes for FuseML deployment to complete.
+{{ "" }}
+{{- if .Release.IsInstall }}
+
+Download FuseML client from https://github.com/fuseml/fuseml-core/releases.
+
+To use the FuseML CLI, you must point it to the FuseML server URL, e.g.:
+
+export FUSEML_SERVER_URL=http://$(kubectl get VirtualService -n fuseml-core fuseml-core -o jsonpath="{.spec.hosts[0]}")
+
+Find more in the FuseML documentation and tutorials at https://fuseml.github.io/docs/
+{{- end }}
