@@ -1,0 +1,19 @@
+name: Lint Commit Messages
+
+on:
+  pull_request:
+    branches:
+
+jobs:
+  lint:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Setup gitlint
+        run: sudo pip3 install gitlint
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Lint new commits
+        run: gitlint --commits "origin/${{ github.base_ref }}..HEAD"
