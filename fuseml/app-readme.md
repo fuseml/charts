@@ -7,9 +7,3 @@ By default it installs [FuseML](fuseml.github.io) with its main dependencies (*i
 Providing specific value to `installerCmd` option, you could pass any command [fuseml-installer](https://github.com/fuseml/fuseml) accepts.
 
 Uninstalling the Helm chart will uninstall FuseML from your cluster too.
-
-# Example usage:
-
-```
-helm install fuseml . --namespace fuseml-installer --create-namespace --set systemDomain=example.com  --set extensions='{mlflow,cert-manager}'
-```
