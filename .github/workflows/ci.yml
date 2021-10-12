@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  workflow_dispatch:
+  pull_request:
+
+jobs:
+  install:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Create k8s cluster
+        run: .ci/k3d-cluster.sh
+
+      - name: Install FuseML Chart
+        run: |
+          helm install fuseml fuseml/ --create-namespace --namespace fuseml-installer --set extensions='{cert-manager,mlflow,kfserving}'
+
+      - name: Wait for deployment to finish
+        run: .ci/track-fuseml-job.sh
+
+      - name: Check the installed extensions
+        run: |
+          export FUSEML_SERVER_URL=http://$(kubectl get VirtualService -n fuseml-core fuseml-core -o jsonpath="{.spec.hosts[0]}")
+          extensions=$(curl -sd '{}' -X GET -H "Content-Type: application/x-yaml" $FUSEML_SERVER_URL/extensions | yq e ".[].id" - | sort | tr '\n' ',' | tr -d "\"" | head -c -1)
+          if [[ "$extensions" == "cert-manager,kfserving,knative,mlflow" ]]; then
+              exit 0
+          fi
+          echo "Wrong list of installed extensions: $extensions"
+          exit 1
