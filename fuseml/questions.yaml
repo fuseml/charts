@@ -1,5 +1,5 @@
 labels:
-  io.cattle.role: project # options are cluster/project
+  io.cattle.role: project
 questions:
 # Global Options
 - variable: extensionsRepository
@@ -8,3 +8,29 @@ questions:
   type: string
   label: Path to custom repository with FuseML extensions
   group: "Global Options"
+- variable: systemDomain
+  required: false
+  description: "# The domain for FuseML. Should be pointing to the load balancer public IP."
+  type: string
+  label: FuseML domain
+  group: "Global Options"
+- variable: extensions.mlflow
+  default: false
+  required: false
+  type: boolean
+  label: Install MLFlow
+  description: "MLFlow is an open source platform specialized in tracking ML experiments, and packaging and deploying ML models."
+  group: "Extensions"
+- variable: extensions.kfserving
+  default: false
+  required: false
+  type: boolean
+  label: Install KFServing
+  description: "Serverless Inferencing on Kubernetes"
+  group: "Extensions"
+- variable: extensions.custom
+  required: false
+  type: string
+  label: Install custom extensions
+  description: "To add custom extensions (that need to be present in the extensions repository), fill their names into one space separated string"
+  group: "Extensions"

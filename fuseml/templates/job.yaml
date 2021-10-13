@@ -32,8 +32,19 @@ spec:
           {{- if .Values.systemDomain }}
           {{-   $args = concat $args (list "--system-domain" .Values.systemDomain) }}
           {{- end }}
-          {{- range .Values.extensions }}
-          {{-   $args = concat $args (list "--extensions" .) }}
+          {{- if .Values.extensions.mlflow }}
+          {{-   $args = concat $args (list "--extensions" "mlflow") }}
+          {{- end }}
+          {{- if .Values.extensions.kfserving }}
+          {{-   $args = concat $args (list "--extensions" "kfserving") }}
+          {{- end }}
+          {{- if .Values.extensions.seldon }}
+          {{-   $args = concat $args (list "--extensions" "seldon-core") }}
+          {{- end }}
+          {{- if .Values.extensions.custom }}
+              {{- range splitList " " .Values.extensions.custom }}
+              {{-   $args = concat $args (list "--extensions" .) }}
+              {{- end }}
           {{- end }}
           args:
           {{- range $args }}

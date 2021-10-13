@@ -17,7 +17,7 @@ jobs:
 
       - name: Install FuseML Chart
         run: |
-          helm install fuseml fuseml/ --create-namespace --namespace fuseml-installer --set extensions='{cert-manager,mlflow,kfserving}'
+          helm install fuseml fuseml/ --create-namespace --namespace fuseml-installer --set extensions.mlflow=true --set extensions.kfserving=true
 
       - name: Wait for deployment to finish
         run: .ci/track-fuseml-job.sh

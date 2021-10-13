@@ -9,8 +9,14 @@ installerCmd: "install"
 # Path (URL) to custom repository with FuseML extensions
 extensionsRepository:
 
-# List of extensions to install
-extensions: []
+# Choose which extensions to install
+extensions:
+  mlflow: false
+  kfserving: false
+  seldon: false
+  # It's possible to add custom extensions if your extensionRepository contains instruction how to install it.
+  # This is a space separated string value.
+  custom: ""
 
 # The domain for Fuseml. Should be pointing to the load balancer public IP.
 systemDomain:
