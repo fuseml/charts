@@ -1,3 +1,4 @@
+# This job is only executed when uninstalling the chart
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -30,12 +31,6 @@ spec:
           {{- $args := list "uninstall" }}
           {{- if .Values.extensionsRepository }}
           {{-   $args = concat $args (list "--extensions-repository" .Values.extensionsRepository) }}
-          {{- end }}
-          {{- if .Values.systemDomain }}
-          {{-   $args = concat $args (list "--system-domain" .Values.systemDomain) }}
-          {{- end }}
-          {{- range .Values.extensions }}
-          {{-   $args = concat $args (list "--extensions" .) }}
           {{- end }}
           args:
           {{- range $args }}
