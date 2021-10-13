@@ -1,0 +1,10 @@
+labels:
+  io.cattle.role: project # options are cluster/project
+questions:
+# Global Options
+- variable: extensionsRepository
+  required: false
+  description: "Optional path to FuseML extensions repository. If not set, extensions are installed from https://github.com/fuseml/extensions/tree/main/installer"
+  type: string
+  label: Path to custom repository with FuseML extensions
+  group: "Global Options"

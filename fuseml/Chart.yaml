@@ -4,5 +4,5 @@ description: Set up [FuseML](http://fuseml.github.io/) in your Kubernetes cluste
 
 type: application
 
-version: 0.1.0
+version: 0.1.1
 appVersion: "v0.2.1"
