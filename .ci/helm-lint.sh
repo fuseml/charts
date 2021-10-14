@@ -4,8 +4,8 @@ set -euo pipefail
 # run the entire script and exit with 1, when an error occured
 EXIT_CODE=0
 
-# List of directories which contains modified helm charts.
-DIRS=($(ls -d */))
+# List of directories which contains helm charts.
+DIRS=($(find `ls -d */*` -maxdepth 0 -type d))
 
 if [ "${#DIRS[@]}" -eq 0 ]; then
     echo "No charts were modified."
