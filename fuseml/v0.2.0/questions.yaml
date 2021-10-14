@@ -10,7 +10,7 @@ questions:
   group: "Global Options"
 - variable: systemDomain
   required: false
-  description: "# The domain for FuseML. Should be pointing to the load balancer public IP."
+  description: "The domain for FuseML. Should be pointing to the load balancer public IP."
   type: string
   label: FuseML domain
   group: "Global Options"
