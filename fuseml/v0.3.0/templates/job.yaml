@@ -1,0 +1,70 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "fuseml.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "fuseml.labels" . | nindent 4 }}
+spec:
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "fuseml.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "fuseml.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          {{- $args := splitList " " .Values.installerCmd }}
+          {{- if .Values.extensionsRepository }}
+          {{-   $args = concat $args (list "--extensions-repository" .Values.extensionsRepository) }}
+          {{- end }}
+          {{- if .Values.systemDomain }}
+          {{-   $args = concat $args (list "--system-domain" .Values.systemDomain) }}
+          {{- end }}
+          {{- if .Values.extensions.mlflow }}
+          {{-   $args = concat $args (list "--extensions" "mlflow") }}
+          {{- end }}
+          {{- if .Values.extensions.kserve }}
+          {{-   $args = concat $args (list "--extensions" "kserve") }}
+          {{- end }}
+          {{- if .Values.extensions.seldon }}
+          {{-   $args = concat $args (list "--extensions" "seldon-core") }}
+          {{- end }}
+          {{- if .Values.extensions.ovms }}
+          {{-   $args = concat $args (list "--extensions" "ovms") }}
+          {{- end }}
+          {{- if .Values.extensions.custom }}
+              {{- range splitList " " .Values.extensions.custom }}
+              {{-   $args = concat $args (list "--extensions" .) }}
+              {{- end }}
+          {{- end }}
+          args:
+          {{- range $args }}
+            - {{ . }}
+          {{- end }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+      restartPolicy: Never
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+  backoffLimit: 0

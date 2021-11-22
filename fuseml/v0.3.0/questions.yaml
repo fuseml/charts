@@ -1,0 +1,50 @@
+labels:
+  io.cattle.role: project
+questions:
+# Global Options
+- variable: extensionsRepository
+  required: false
+  description: "Optional path to FuseML extensions repository. If not set, extensions are installed from https://github.com/fuseml/extensions/tree/main/installer"
+  type: string
+  label: Path to custom repository with FuseML extensions
+  group: "Global Options"
+- variable: systemDomain
+  required: false
+  description: "The domain for FuseML. Should be pointing to the load balancer public IP."
+  type: string
+  label: FuseML domain
+  group: "Global Options"
+- variable: extensions.mlflow
+  default: false
+  required: false
+  type: boolean
+  label: Install MLFlow
+  description: "MLFlow is an open source platform specialized in tracking ML experiments, and packaging and deploying ML models."
+  group: "Extensions"
+- variable: extensions.kserve
+  default: false
+  required: false
+  type: boolean
+  label: Install KServe
+  description: "Serverless Inferencing on Kubernetes"
+  group: "Extensions"
+- variable: extensions.seldon
+  default: false
+  required: false
+  type: boolean
+  label: Install Seldon Core
+  description: "An MLOps framework to package, deploy, monitor and manage thousands of production machine learning models"
+  group: "Extensions"
+- variable: extensions.ovms
+  default: false
+  required: false
+  type: boolean
+  label: Install OVMS
+  description: "OpenVINO Model Server Kubernetes Operator"
+  group: "Extensions"
+- variable: extensions.custom
+  required: false
+  type: string
+  label: Install custom extensions
+  description: "To add custom extensions (that need to be present in the extensions repository), fill their names into one space separated string"
+  group: "Extensions"
