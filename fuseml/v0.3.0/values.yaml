@@ -1,0 +1,41 @@
+image:
+  repository: ghcr.io/fuseml/fuseml-installer
+  pullPolicy: Always
+  tag:
+
+# main command to pass to the installer
+installerCmd: "install"
+
+# Path (URL) to custom repository with FuseML extensions
+extensionsRepository:
+
+# Choose which extensions to install
+extensions:
+  mlflow: false
+  kserve: false
+  seldon: false
+  ovms: false
+  # It's possible to add custom extensions if your extensionRepository contains instruction how to install it.
+  # This is a space separated string value.
+  custom: ""
+
+# The domain for Fuseml. Should be pointing to the load balancer public IP.
+systemDomain:
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: "fuseml-installer"
+
+podAnnotations: {}
+podSecurityContext: {}
+securityContext: {}
+
+resources: {}
+nodeSelector: {}
+tolerations: []
+affinity: {}

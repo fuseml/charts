@@ -1,0 +1,10 @@
+apiVersion: v2
+name: fuseml
+description: Set up FuseML in your Kubernetes cluster
+
+type: application
+
+version: 0.3.0
+appVersion: "v0.3.0"
+home: https://fuseml.github.io
+icon: file://../FuseML-Logo-squared.png
